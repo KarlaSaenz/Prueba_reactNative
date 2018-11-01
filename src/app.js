@@ -5,11 +5,23 @@ import {
     View 
 } from 'react-native';
 import List from './components/List'
+import Slide from './components/Slider'
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
-      <List />
+      <View style={[{flex: 1}, styles.container]}>
+        <Slide />
+        <List />
+      </View>
     );
   }
+
+  const styles = StyleSheet.create({
+    container:{
+      backgroundColor: 'black'
+    }
+  })
 }
+
+export default App

@@ -85,14 +85,32 @@ class List extends Component {
     render(){
         return(
             <View style ={{flex: 1}}>
-                <FlatList
-                    horizontal
-                    SeparatorComponent={() => <View style={{width: 5}} />}
-                    renderItem = {({item}) => this._renderItem(item)}
-                    data={shows_first}
-                />
+                <View>
+                    <Text style={styles.text}>My List</Text>
+                    <FlatList
+                        horizontal
+                        SeparatorComponent={() => <View style={{width: 5}} />}
+                        renderItem = {({item}) => this._renderItem(item)}
+                        data={shows_first}
+                    />
+                </View>
+                <View>
+                    <Text style={styles.text}>Top Picks For You</Text>
+                    <FlatList
+                        horizontal
+                        SeparatorComponent={() => <View style={{width: 5}} />}
+                        renderItem = {({item}) => this._renderItem(item)}
+                        data={shows_second}
+                    />
+                </View>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    text:{
+        color: 'white'
+    }
+})
 export default List
