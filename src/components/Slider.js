@@ -2,56 +2,63 @@ import React, {Component} from 'react'
 import {
     Text,
     View,
-    Image
+    Image,
+    Dimensions
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 
+
 const {width}= Dimensions.get('window')
 
-const Slider = props => (
-    <View styles={styles.container} >
-        <Image styles={styles.image} source={props.uri} />
-    </View>
-)
-
-const styles ={
+const styles = {
     container:{
+        height:220
+    },
+    containerImage:{
         flex: 1,
         justifyContent: 'center'
+        
     },
     image: {
         flex: 1,
         width
     }
-}
+};
 
-export default class Slide extends Component{
+export default class extends Component{
     constructor(props){
         super(props)
         this.state = {
+            imagesSlider: []
+        }
+    }
+
+    componentDidMount () {
+        this.setState({
             imagesSlider: [
                 require('../images/1.jpg'),
                 require('../images/2.jpg'),
                 require('../images/3.jpg')
             ]
-        }
+        })
     }
 
     render(){
         return(
-            <View>
+            <View style={styles.container}>
                 <Swiper
-                    autoplay
-                    height={240}
+                    autoplay={true}
                 >
-                    {
-                        this.state.imagesSlider.map((item,i) => <Slide 
-                            uri={item}
-                            key={i}
-                        />)
-                    }
+                    {this.state.imagesSlider.map((item, key) => {
+                        return (
+                            <View key={key} style={styles.containerImage} >
+                                <Image style={styles.image} source={item} />
+                            </View>
+                        )
+                    })}
                 </Swiper>
             </View>
+            
         )
     }
 }

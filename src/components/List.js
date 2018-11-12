@@ -78,7 +78,10 @@ class List extends Component {
 
     _renderItem(item){
         return(
-            <Image style={{width: 120, height: 180}} source={{uri: item.image}}/>
+            <View style={{flexDirection: 'row'}}>
+                <Image style={{width: 120, height: 180}} source={{uri: item.image}}/>
+                <View style={{width: 5}} />
+            </View>
         )
     }
 
@@ -89,8 +92,8 @@ class List extends Component {
                     <Text style={styles.text}>My List</Text>
                     <FlatList
                         horizontal
-                        SeparatorComponent={() => <View style={{width: 5}} />}
                         renderItem = {({item}) => this._renderItem(item)}
+                        keyExtractor = { (item, index) => index.toString() }
                         data={shows_first}
                     />
                 </View>
@@ -98,8 +101,8 @@ class List extends Component {
                     <Text style={styles.text}>Top Picks For You</Text>
                     <FlatList
                         horizontal
-                        SeparatorComponent={() => <View style={{width: 5}} />}
                         renderItem = {({item}) => this._renderItem(item)}
+                        keyExtractor = { (item, index) => index.toString() }
                         data={shows_second}
                     />
                 </View>
