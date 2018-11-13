@@ -29,15 +29,17 @@ class App extends React.Component {
   }
   render() {
     return (
-      <View style={[{flex: 1}, styles.container]}>
+      <View style={{flex: 1}}>
         <SideMenu 
         menu={<Menu/>}
         isOpen={this.state.isOpen}
         onChange={(isOpen)=> this.updateMenu(isOpen)}
         >
-          <Header toggle={this.toggle.bind(this)}/>
-          <Slide />
-          <List />
+          <View style={[{flex: 1}, styles.container]}>
+            <Header toggle={this.toggle.bind(this)}/>
+            <Slide />
+            <List />
+          </View>
         </SideMenu>
       </View>
     );
