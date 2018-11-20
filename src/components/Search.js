@@ -12,76 +12,11 @@ import {
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
+import {getAll} from '../api/api'
 
 const {width,height} = Dimensions.get('window')
 
-const shows_first = [
-    {
-        key:1,
-        name:'Suits',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/0/2432.jpg'
-    },
-    {
-        key:2,
-        name:'Modern Family',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/0/628.jpg'
-    },
-    {
-        key:3,
-        name:'The Flash',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/78/195988.jpg'
-    },
-    {
-        key:4,
-        name:'SuperGirl',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/83/209955.jpg'
-    },
-    {
-        key:5,
-        name:'Designated Survivor',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/101/253490.jpg'
-    },
-    {
-        key:6,
-        name:'Legacy',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/90/225030.jpg'
-    }
-]
-
-const shows_second = [
-    {
-        key:7,
-        name: 'suits',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/0/2432.jpg'
-    },
-    {
-        key:8,
-        name: 'Modern Family',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/0/628.jpg'
-    },
-    {
-        key:9,
-        name: 'The Flash',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/78/195988.jpg'
-    },
-    {
-        key:10,
-        name: 'SuperGirl',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/83/209955.jpg'
-    },
-    {
-        key:11,
-        name: 'Designated Survivor',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/101/253490.jpg'
-    },
-    {
-        key:12,
-        name: 'Legacy',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/90/225030.jpg'
-    }
-]
-
-class search extends Component{
+class Search extends Component{
     constructor(props){
         super(props)
         this.state = {
@@ -91,7 +26,8 @@ class search extends Component{
     }
 
     filter(text){
-        const newData = shows_first.filter(function(item){
+        const data = getAll()
+        const newData = data.filter(function(item){
             const itemData = item.name.toUpperCase()
             const textData = text.toUpperCase()
             return itemData.indexOf(textData) > -1
@@ -104,7 +40,7 @@ class search extends Component{
     }
 
     deleteData(){
-        this.setState({text:'',data:''})
+        this.setState({text: '', data:''})
     }
 
     _renderItem(item){
@@ -115,8 +51,9 @@ class search extends Component{
 
 
     render(){
+        const {goBack} = this.props.navigation
         return(
-            <View style={style.container}>
+            <View style={styles.container}>
                 <View style={styles.header}>
                     <Icon
                         name="search"
@@ -126,7 +63,7 @@ class search extends Component{
                     />
                     <TextInput
                         value={this.state.text}
-                        onChangeText={(Text) => this.filter(text)}
+                        onChangeText={(text) => this.filter(text)}
                         style={styles.input}
                         placeholder="Search"
                         placeholderTextColor="grey"
@@ -143,7 +80,7 @@ class search extends Component{
                             />
                         </TouchableWithoutFeedback>
                     : null }
-                    <TouchableWithoutFeedback style={styles.cancelButton}>
+                    <TouchableWithoutFeedback style={styles.cancelButton} onPress={()=>goBack()}>
                         <View style={styles.containerButton}>
                             <Text style={styles.cancelButtonText}>Cancel</Text>
                         </View>
@@ -171,8 +108,8 @@ const styles = StyleSheet.create({
     header:{
         height:40,
         backgroundColor:'#181818',
-        borderBottonWidth:1,
         borderColor:'#3a3a3a',
+        borderBottomWidth:2,
         paddingBottom:5,
         marginTop:20,
         flexDirection:'row',
@@ -195,13 +132,13 @@ const styles = StyleSheet.create({
     },
     input :{
         width: width - (width / 4),
-        height:30,
+        height:36,
         backgroundColor:'#323232',
         marginHorizontal:10,
-        paddindLeft:30,
+        paddingLeft:30,
         borderRadius:3
     },
-    cancel:{
+    cancelButtonText:{
         color:'white',
     },
     image:{

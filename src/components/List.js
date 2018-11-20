@@ -4,82 +4,23 @@ import {
     View,
     StyleSheet,
     FlatList,
-    Image
+    Image,
+    TouchableWithoutFeedback
 } from 'react-native';
 
-const shows_first = [
-    {
-        key:1,
-        name:'Suits',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/0/2432.jpg'
-    },
-    {
-        key:2,
-        name:'Modern Family',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/0/628.jpg'
-    },
-    {
-        key:3,
-        name:'The Flash',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/78/195988.jpg'
-    },
-    {
-        key:4,
-        name:'SuperGirl',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/83/209955.jpg'
-    },
-    {
-        key:5,
-        name:'Designated Survivor',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/101/253490.jpg'
-    },
-    {
-        key:6,
-        name:'Legacy',
-        image:'https://static.tvmaze.com/uploads/images/medium_portrait/90/225030.jpg'
-    }
-]
-
-const shows_second = [
-    {
-        key:7,
-        name: 'suits',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/0/2432.jpg'
-    },
-    {
-        key:8,
-        name: 'Modern Family',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/0/628.jpg'
-    },
-    {
-        key:9,
-        name: 'The Flash',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/78/195988.jpg'
-    },
-    {
-        key:10,
-        name: 'SuperGirl',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/83/209955.jpg'
-    },
-    {
-        key:11,
-        name: 'Designated Survivor',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/101/253490.jpg'
-    },
-    {
-        key:12,
-        name: 'Legacy',
-        image: 'https://static.tvmaze.com/uploads/images/medium_portrait/90/225030.jpg'
-    }
-]
-
+import {getTwoItems} from '../api/api'
 
 class List extends Component {
 
     _renderItem(item){
+        const {navigate} = this.props.navigation
         return(
             <View style={{flexDirection: 'row'}}>
-                <Image style={{width: 120, height: 180}} source={{uri: item.image}}/>
+                <TouchableWithoutFeedback onPress={
+                    () => navigate('Details',{ item : item })}
+                >
+                    <Image style={{width: 120, height: 180}} source={{uri: item.image}}/>
+                </TouchableWithoutFeedback>
                 <View style={{width: 5}} />
             </View>
         )
@@ -94,7 +35,7 @@ class List extends Component {
                         horizontal
                         renderItem = {({item}) => this._renderItem(item)}
                         keyExtractor = { (item, index) => index.toString() }
-                        data={shows_first}
+                        data={getTwoItems[0]}
                     />
                 </View>
                 <View>
@@ -103,7 +44,7 @@ class List extends Component {
                         horizontal
                         renderItem = {({item}) => this._renderItem(item)}
                         keyExtractor = { (item, index) => index.toString() }
-                        data={shows_second}
+                        data={getTwoItems[1]}
                     />
                 </View>
             </View>

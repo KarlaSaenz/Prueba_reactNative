@@ -1,34 +1,20 @@
 import React, {Component} from 'react'
-import{
-    Navigator
-} from 'react-native'
 import App from './app'
 import Search from './components/Search'
+import Details from './components/Details'
+import {
+    createStackNavigator,
+  } from 'react-navigation';
 
-class IndexApp extends Component{
-    _renderScene(route, navigator){
-        var navigator = {navigator}
+const IndexApp = createStackNavigator({
+    Home:{screen:App},
+    Search:{screen:Search},
+    Details:{screen:Details}
+},{
+    initialRouteName: 'Home',
+    headerMode: 'none'
+})
 
-        switch(route,ident){
-            case 'App':
-                return(
-                    <App/>
-                )
-            case 'Search':
-                return (
-                    <Search/>
-                )
-        }
-    }
 
-    render(){
-        return(
-            <Navigator
-                initialRouter={{ident:'Search'}}
-                renderScene={this._renderScene}
-            />
-        )
-    }
-}
 
 export default IndexApp
