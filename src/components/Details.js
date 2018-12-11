@@ -13,12 +13,12 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import IonIcons from 'react-native-vector-icons/Ionicons'
+import TabsEpisodes from './TabsEpisodes'
 
 const {width,height} = Dimensions.get('window')
 
 class Details extends Component{
     render(){
-        console.log(this.props)
         const {params} = this.props.navigation.state
         const {episodes} = params.item.details
         const {name} = params.item
@@ -76,7 +76,12 @@ class Details extends Component{
                             </TouchableHighlight>
                         </View>
                     </View>
-                
+                    <View  style={styles.tabs}>
+                        <TabsEpisodes 
+                            navigation={this.props.navigation}
+                            data={episodes}
+                        />
+                    </View>
             </ScrollView>
         )
     }
@@ -175,6 +180,9 @@ const styles = StyleSheet.create({
     },
     light: {
         fontWeight: '200'
+    },
+    tabs:{
+        height:height
     }
 })
 
