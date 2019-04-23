@@ -19,11 +19,13 @@ const {width,height} = Dimensions.get('window')
 
 class Details extends Component{
     render(){
+
         const {params} = this.props.navigation.state
         const {episodes} = params.item.details
         const {name} = params.item
         const {thumbnail, description,cast,season,creator,year,numOfEpisodes} = params.item.details
         return(
+    
             <ScrollView style={styles.container}>
            
                     <ImageBackground

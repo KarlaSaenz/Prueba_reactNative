@@ -41,13 +41,20 @@ class Episodes extends Component{
         console.log(this.props)
         return(
             <View style={styles.container}>
-                {this.renderEpisodes()}
+                <Text>episode</Text>
+                {/* {this.renderEpisodes()} */}
             </View>
         )
     }
 
 
 }
+
+// const styles = StyleSheet.create({
+//     videoEpisode:{
+//         position:'absolute'
+//     }
+// });
 
 
 export default Episodes

@@ -1,55 +1,92 @@
 import React, {Component } from 'react'
-import { View , StyleSheet , Dimensions} from 'react-native'
+import { View , StyleSheet , Dimensions, Text} from 'react-native'
 import Episodes from './Episodes'
 import Trailers from './Trailers'
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
+import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 
-const FirstRoute = () => (
-        <Episodes  style={styles.scene}
-            // seasons={this.props.seasons}
-            // getSeason={this.props.getSeason}
-            // navigation={this.props.navigation} 
-            // currentSeason={this.props.currentSeason}
-            episodes={this.props.data} 
-        />
-);
-const SecondRoute = () => (
-    <Trailers style={styles.scene} />
-);
+const {width,height} = Dimensions.get('window')
 
 export default class TabsEpisodes extends React.Component {
-  state = {
-    index: 0,
-    routes: [
-      { key: 'first', title: 'Episodes' },
-      { key: 'second', title: 'Trailers & More' },
-    ],
-  };
+  constructor(props) {
+    super(props);
 
-  render() {
-    console.log(this.props)
+    this.state = {
+      index: 0,
+      routes: [
+        { key: 'active', title: 'Episodes'},
+        { key: 'inactive', title: 'Trailers & More' },
+      ],
+    };
+
+    this.renderScene = this.renderScene.bind(this);
+    this.renderLabel = this.renderLabel.bind(this);
+    this.onTabChange = this.onTabChange.bind(this);
+  }
+
+  onTabChange(index) {
+    this.setState({ index });
+  }
+
+  renderScene({ route }) {
+    if (!route.key) return null;
+
+    if (route.key === 'active') {
+      return <Episodes type="active" episodes={this.props.data}/>;
+    }
+
+    if (route.key === 'inactive') {
+      return <Trailers type="inactive" />;
+    }
+  }
+
+  renderLabel({ route }, props) {
+    const { index } = this.state;
+    const selected = route.key === props.navigationState.routes[index].key;
+
+    return (
+      <View>
+        <Text>
+          {route.title.toUpperCase()}
+        </Text>
+      </View>
+    );
+  }
+
+  renderTab() {
     return (
       <TabView
-        style={styles.containerTabs}
         navigationState={this.state}
-        renderScene={SceneMap({
-          first: FirstRoute,
-          second: SecondRoute,
-        })}
-        onIndexChange={index => this.setState({ index })}
-        initialLayout={{ width: Dimensions.get('window').width, height:0 }}
+        onIndexChange={this.onTabChange}
+        renderScene={this.renderScene}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            renderLabel={e => this.renderLabel(e, props)}
+          />
+        )}
       />
     );
   }
+
+  render() {
+    return (
+      <View style={styles.containerTabs}>
+        {this.renderTab()}
+      </View>
+    );
+  }
+
 }
+
 
 const styles = StyleSheet.create({
   scene: {
     flex: 1
   },
   containerTabs:{
+    color:'#fff',
     borderTopWidth:2,
-    borderColor:'#000'
+    borderColor:'#fff'
   }
 });
 
